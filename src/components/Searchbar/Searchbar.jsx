@@ -10,10 +10,14 @@ class Searchbar extends Component {
     const { name, value } = event.currentTarget;
     this.setState({ [name]: value });
   };
+  reset = () => {
+    this.setState({ name: ' ', number: ' ' });
+  };
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.handelSearch(this.state);
+    this.props.handelSearch(this.state.name);
+    this.reset();
   };
 
   render() {

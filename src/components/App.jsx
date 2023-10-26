@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Notiflix from 'notiflix';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Modal from './Modal/Modal';
@@ -16,8 +17,9 @@ export class App extends Component {
     query: '',
     page: 1,
     actionID: null,
+    showLoadMoreBtn: false,
   };
-  async componentDidUpdate(_, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     if (
       prevState.page !== this.state.page ||
       prevState.query !== this.state.query
@@ -25,18 +27,22 @@ export class App extends Component {
       this.setState({ isLoading: true });
       try {
         const response = await fetchImages(this.state.query, this.state.page);
+
         this.setState(prevState => ({
           images: [...prevState.images, ...response],
         }));
       } catch (error) {
         this.setState({ error });
+        // Notiflix.Notify.failure(
+        //   'Sorry, something went wrong, please try again later'
+        // );
       } finally {
         this.setState({ isLoading: false });
       }
     }
   }
 
-  galleryListHandler = event => {
+  handleGelleryList = event => {
     if (event.target.nodeName === 'IMG') {
       this.setState({ actionID: event.target.id, modalOpen: true });
     }
@@ -59,7 +65,7 @@ export class App extends Component {
       <div>
         <Searchbar handelSearch={this.handelSearch} />
 
-        <ImageGallery handleGelleryList={this.galleryListHandler}>
+        <ImageGallery handleGelleryList={this.handleGelleryList}>
           {this.state.images.map(image => (
             <ImageGalleryItem image={image} key={image.id} />
           ))}
