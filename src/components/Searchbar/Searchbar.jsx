@@ -1,4 +1,4 @@
-import React, { Component, component } from 'react';
+import React, { Component } from 'react';
 import css from './Searchbar.module.css';
 
 class Searchbar extends Component {
@@ -10,19 +10,16 @@ class Searchbar extends Component {
     const { name, value } = event.currentTarget;
     this.setState({ [name]: value });
   };
-  //   reset = () => {
-  //     this.setState({ name: ' ' });
-  //   };
+
   handleSubmit = event => {
     event.preventDefault();
-    console.log(this.state);
-    // this.reset();
+    this.props.handelSearch(this.state);
   };
 
   render() {
     return (
       <header className={css.searchBar}>
-        <form onSubmit={this.handleInputChange} className={css.searchForm}>
+        <form onSubmit={this.handleSubmit} className={css.searchForm}>
           <button type="submit" className={css.searchFormBtn}>
             <span className={css.searchBtnLabel}>Search</span>
           </button>
@@ -34,6 +31,7 @@ class Searchbar extends Component {
             onChange={this.handleInputChange}
             value={this.state.name}
             placeholder="Search images and photos"
+            required
           />
         </form>
       </header>
