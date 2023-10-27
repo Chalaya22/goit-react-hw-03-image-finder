@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import Notiflix from 'notiflix';
+import axios from 'axios';
+import css from './App.module.css';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Modal from './Modal/Modal';
-import axios from 'axios';
+import Loader from './Loader/Loader';
+
 import fetchImages from '../services/fetch';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 
@@ -27,7 +30,6 @@ export class App extends Component {
       this.setState({ isLoading: true });
       try {
         const response = await fetchImages(this.state.query, this.state.page);
-
         this.setState(prevState => ({
           images: [...prevState.images, ...response],
         }));
@@ -44,7 +46,7 @@ export class App extends Component {
 
   handleGelleryList = event => {
     if (event.target.nodeName === 'IMG') {
-      this.setState({ actionID: event.target.id, modalOpen: true });
+      this.setState({ actionID: event.target.id, isOpenModal: true });
     }
   };
 
@@ -55,14 +57,14 @@ export class App extends Component {
   closeModal = () => {
     this.state({ isOpenModal: false, modalData: null });
   };
-
+  //serchbar
   handelSearch = query => {
     this.setState({ query: query, page: 1, images: [] });
   };
 
   render() {
     return (
-      <div>
+      <div className={css.app}>
         <Searchbar handelSearch={this.handelSearch} />
 
         <ImageGallery handleGelleryList={this.handleGelleryList}>
@@ -70,6 +72,7 @@ export class App extends Component {
             <ImageGalleryItem image={image} key={image.id} />
           ))}
         </ImageGallery>
+        {this.state.isLoading && <Loader />}
 
         {/* <Modal /> */}
       </div>
