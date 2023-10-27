@@ -6,6 +6,7 @@ import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Modal from './Modal/Modal';
 import Loader from './Loader/Loader';
+import Button from './Button/Button';
 
 import fetchImages from '../services/fetch';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
@@ -34,16 +35,13 @@ export class App extends Component {
           images: [...prevState.images, ...response],
         }));
       } catch (error) {
-        this.setState({ error });
-        // Notiflix.Notify.failure(
-        //   'Sorry, something went wrong, please try again later'
-        // );
+        this.setState({ error: error.massage });
       } finally {
         this.setState({ isLoading: false });
       }
     }
   }
-
+  //imageGallary
   handleGelleryList = event => {
     if (event.target.nodeName === 'IMG') {
       this.setState({ actionID: event.target.id, isOpenModal: true });
@@ -61,10 +59,17 @@ export class App extends Component {
   handelSearch = query => {
     this.setState({ query: query, page: 1, images: [] });
   };
+  // button Load More
+  onButtonLoadMore = () => {
+    this.setState(prevState => ({ page: prevState.page + 1 }));
+  };
 
   render() {
     return (
       <div className={css.app}>
+        {this.state.error !== null && (
+          <p> Ooops...Error massage: {this.state.error}</p>
+        )}
         <Searchbar handelSearch={this.handelSearch} />
 
         <ImageGallery handleGelleryList={this.handleGelleryList}>
@@ -72,7 +77,12 @@ export class App extends Component {
             <ImageGalleryItem image={image} key={image.id} />
           ))}
         </ImageGallery>
+
         {this.state.isLoading && <Loader />}
+
+        {this.state.images.length > 0 && (
+          <Button onButtonLoadMore={this.onButtonLoadMore} />
+        )}
 
         {/* <Modal /> */}
       </div>
