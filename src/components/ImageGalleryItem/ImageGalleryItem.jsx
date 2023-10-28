@@ -1,13 +1,16 @@
 import css from './ImageGalleryItem.module.css';
 
-const ImageGalleryItem = ({ image }) => {
+const ImageGalleryItem = ({ image, openModalImage }) => {
+  const { id, webformatURL, tags, largeImageURL } = image;
   return (
     <li className={css.ImageGalleryItem}>
       <img
-        id={image.id}
-        src={image.webformatURL}
-        alt={image.tags}
+        id={id}
+        src={webformatURL}
+        alt={tags}
+        largeImageURL={largeImageURL}
         className={css.ImageGalleryItemImage}
+        onClick={() => openModalImage({ largeImageURL, alt: tags })}
       />
     </li>
   );
