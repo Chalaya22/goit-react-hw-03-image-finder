@@ -8,7 +8,6 @@ const ImageGalleryItem = ({ image, openModalImage }) => {
         id={id}
         src={webformatURL}
         alt={tags}
-        largeImageURL={largeImageURL}
         className={css.ImageGalleryItemImage}
         onClick={() => openModalImage({ largeImageURL, alt: tags })}
       />
