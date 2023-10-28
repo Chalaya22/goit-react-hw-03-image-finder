@@ -37,7 +37,7 @@ export class App extends Component {
 
         if (response.length === 0) {
           this.setState({ showLoadMoreBtn: false });
-          Notiflix.Notify.warning('Sorry, no images for your request...');
+          Notiflix.Notify.warning('Sorry,🥶 no images for your request...');
         }
 
         this.setState(prevState => ({
@@ -45,6 +45,7 @@ export class App extends Component {
         }));
       } catch (error) {
         this.setState({ error: error });
+        Notiflix.Notify.failure('ERROR ..😢😢😢..try again later');
       } finally {
         this.setState({ isLoading: false });
       }
