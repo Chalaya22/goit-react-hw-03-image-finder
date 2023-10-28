@@ -23,7 +23,7 @@ export class App extends Component {
     isOpenModal: false,
     modalData: [],
 
-    loadMore: false,
+    showLoadMoreBtn: false,
     totalHits: ' ',
   };
   async componentDidUpdate(_, prevState) {
@@ -36,6 +36,7 @@ export class App extends Component {
         const response = await fetchImages(this.state.query, this.state.page);
 
         if (response.length === 0) {
+          this.setState({ showLoadMoreBtn: false });
           Notiflix.Notify.warning('Sorry, no images for your request...');
         }
 
