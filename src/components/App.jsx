@@ -33,15 +33,14 @@ export class App extends Component {
       this.setState({ isLoading: true });
       try {
         const response = await fetchImages(this.state.query, this.state.page);
+        this.setState(prevState => ({
+          images: [...prevState.images, ...response],
+        }));
 
         if (response.length === 0) {
           this.setState({ showLoadMoreBtn: false });
           Notiflix.Notify.warning('Sorry,🥶 no images for your request...');
         }
-
-        this.setState(prevState => ({
-          images: [...prevState.images, ...response],
-        }));
       } catch (error) {
         this.setState({ error });
         Notiflix.Notify.failure('ERROR ..😢😢😢..try again later');
