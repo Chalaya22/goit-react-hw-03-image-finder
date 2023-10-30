@@ -24,7 +24,6 @@ export class App extends Component {
     modalData: [],
 
     showLoadMoreBtn: false,
-    totalHits: ' ',
   };
   async componentDidUpdate(_, prevState) {
     if (
@@ -44,7 +43,7 @@ export class App extends Component {
           images: [...prevState.images, ...response],
         }));
       } catch (error) {
-        this.setState({ error: error });
+        this.setState({ error });
         Notiflix.Notify.failure('ERROR ..😢😢😢..try again later');
       } finally {
         this.setState({ isLoading: false });
