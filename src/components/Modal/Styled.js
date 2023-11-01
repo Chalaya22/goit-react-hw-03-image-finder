@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 
 export const StyledModal = styled.div`
-  &:hover {
-    cursor: pointer;
-  }
   .overlay {
     position: fixed;
     top: 0;
@@ -20,8 +17,5 @@ export const StyledModal = styled.div`
   .modal {
     max-width: calc(100vw - 48px);
     max-height: calc(100vh - 24px);
-    &:hover {
-      cursor: auto;
-    }
   }
 `;
